@@ -29,7 +29,7 @@ jobs:
             kube-config: ${{ secrets.KUBE_CONFIG }}
 
       - name: Image Manifestation
-        run: sed -i 's|<IMAGE>|${{ vars.DOCKER_REPO }}:${{ github.sha }}' dev/deployment.yaml
+        run: sed -i 's|<IMAGE>|${{ vars.DOCKER_REPO }}:${{ github.sha }}|' dev/deployment.yaml
 
       - name: Create Resources
         run: |
