@@ -16,4 +16,4 @@ spec:
        - name: rails-hello
          image: <IMAGE>
          ports:
-          - containerPort: 8000
+          - containerPort: 3000
