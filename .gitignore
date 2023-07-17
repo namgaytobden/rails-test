@@ -1,1 +1,6 @@
 .env
+
+# dev server
+supervisord.log 
+supervisord.pid
+ruby/
