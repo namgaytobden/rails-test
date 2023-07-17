@@ -1,0 +1,87 @@
+---
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    working_dir: /app
+    container_name: ${CONTAINER_NAME}-puma
+    image: ${CONTAINER_NAME}
+    entrypoint: ["sh", "./dev/bundle.sh"]
+    command: ["/usr/bin/supervisord", "-c", "/app/dev/supervisord-puma.conf"]
+    ports:
+      - "${SERVER_PORT}:3000"
+    volumes:
+      - ../:/app
+    env_file:
+      - ../.env
+    environment:
+      - BUNDLE_PATH=/app
+      - BUNDLE_GEMS__SELISE__TECH=${BUNDLE_GEMS__SELISE__TECH}
+
+    
+  sidekiq:
+    depends_on:
+      - app
+    image: ${CONTAINER_NAME}
+    container_name: ${CONTAINER_NAME}-sidekiq
+    working_dir: /app
+    command: ["/usr/bin/supervisord", "-c", "/app/dev/supervisord-sidekiq.conf"]
+    volumes:
+      - ../:/app
+    env_file:
+      - ../.env
+    environment:
+      - BUNDLE_PATH=/app
+      - BUNDLE_GEMS__SELISE__TECH=${BUNDLE_GEMS__SELISE__TECH}
+
+
+  sneakers:
+    depends_on:
+      - app
+    image: ${CONTAINER_NAME}
+    container_name: ${CONTAINER_NAME}-sneakers
+    working_dir: /app
+    command: ["/usr/bin/supervisord", "-c", "/app/dev/supervisord-sneakers.conf"]
+    volumes:
+      - ../:/app
+    env_file:
+      - ../.env
+    environment:
+      - BUNDLE_PATH=/app
+      - BUNDLE_GEMS__SELISE__TECH=${BUNDLE_GEMS__SELISE__TECH}
+
+    
+  whenever:
+    depends_on:
+      - app
+    image: ${CONTAINER_NAME}
+    container_name: ${CONTAINER_NAME}-whenever
+    working_dir: /app
+    command: ["/usr/bin/supervisord", "-c", "/app/dev/supervisord-whenever.conf"]
+    volumes:
+      - ../:/app
+    env_file:
+      - ../.env
+    environment:
+      - BUNDLE_PATH=/app
+      - BUNDLE_GEMS__SELISE__TECH=${BUNDLE_GEMS__SELISE__TECH}
+
+  
+  clockwork:
+    depends_on:
+      - app
+    image: ${CONTAINER_NAME}
+    container_name: ${CONTAINER_NAME}-clockwork
+    working_dir: /app
+    command: ["/usr/bin/supervisord", "-c", "/app/dev/supervisord-clockwork.conf"]
+    volumes:
+      - ../:/app
+    env_file:
+      - ../.env
+    environment:
+      - BUNDLE_PATH=/app
+      - BUNDLE_GEMS__SELISE__TECH=${BUNDLE_GEMS__SELISE__TECH}
+
+
