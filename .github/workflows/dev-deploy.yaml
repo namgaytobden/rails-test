@@ -1,0 +1,21 @@
+name: Deploy to Dev
+on:
+   push:
+     branches:
+       - rails/release
+       
+   workflow_dispatch:
+    inputs:
+      server:
+        description: 'Select server to deploy'
+        required: true
+        default: 'server1'
+        type: choice
+        options:
+        - server1
+        - server2
+jobs:
+  deploy:
+    name: Deploy Dev
+    uses: selisebt/workflows/.github/workflows/devploy-dev-backend.yaml@main
+    secrets: inherit
