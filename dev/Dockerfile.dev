@@ -1,0 +1,5 @@
+FROM ruby:3.1-alpine
+
+RUN apk update && apk upgrade --force && \
+    apk add --virtual build-dependencies make g++ nodejs git && \
+    apk add libxml2-dev libpq-dev bash supervisor bash
